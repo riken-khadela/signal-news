@@ -108,9 +108,9 @@ class HTN_CO_UK(BaseScraper):
                 if not tmp['url']:
                     continue
                 
-                # Check if exists (with skip tracking)
-                if self.check_article_exists(tmp['url']):
-                    continue
+                # # Check if exists (with skip tracking)
+                # if self.check_article_exists(tmp['url']):
+                #     continue
                 
                 # title (same as link text)
                 title_ele = children.find('a')
@@ -149,6 +149,10 @@ class HTN_CO_UK(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
+                
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")
@@ -170,7 +174,7 @@ class HTN_CO_UK(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Single static page"""
         self.logger.info("🚀 Starting HTN.co.uk scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing: {url}")
             
@@ -179,6 +183,10 @@ class HTN_CO_UK(BaseScraper):
             self.get_grid_details(url)
             
             if self.grid_details:
+                if self.previous_grid == self.grid_details:
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
         
         # Log final statistics

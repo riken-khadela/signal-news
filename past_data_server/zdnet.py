@@ -103,9 +103,9 @@ class Zdnet(BaseScraper):
                         self.logger.warning('Skipping video article')
                         continue
                 
-                # Check if exists (with skip tracking)
-                if 'url' in tmp and self.check_article_exists(tmp['url']):
-                    continue
+                # # Check if exists (with skip tracking)
+                # if 'url' in tmp and self.check_article_exists(tmp['url']):
+                #     continue
                 
                 # author
                 author_ele = children.find('a', {'class': 'c-listingDefault_author'})
@@ -177,6 +177,9 @@ class Zdnet(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")

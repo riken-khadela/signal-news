@@ -101,9 +101,7 @@ class AdvanceMaterials(BaseScraper):
                 if not tmp['url']:
                     continue
                 
-                # Check if exists (with skip tracking)
-                if self.check_article_exists(tmp['url']):
-                    continue
+                
                 
                 # image
                 img_ele = blog.find('img')
@@ -150,6 +148,10 @@ class AdvanceMaterials(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
+
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")
@@ -170,12 +172,11 @@ class AdvanceMaterials(BaseScraper):
     def run(self):
         """Main execution logic"""
         self.logger.info("🚀 Starting Advanced Materials scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing: {url}")
             self.page_index = 0
             self.consecutive_skips = 0
-            
             while self.should_continue_scraping():
                 self.page_index += 1
                 self.logger.info(f"📄 Processing page {self.page_index}")
@@ -184,6 +185,10 @@ class AdvanceMaterials(BaseScraper):
                 self.get_grid_details(url)
                 
                 if self.grid_details:
+                    if self.previous_grid == self.grid_details:
+                        self.logger.warning("No new articles found, stopping")
+                        break
+                    self.previous_grid = self.grid_details
                     self.check_db_grid()
                 else:
                     self.logger.warning("No articles found, stopping")

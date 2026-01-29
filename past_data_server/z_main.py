@@ -81,30 +81,30 @@ class ScraperRegistry:
     """Registry of all available scrapers with metadata and collection mappings"""
     
     SCRAPERS = {
-        "advance_materials": {
-            "module": advance_materials,
-            "class_name": "AdvanceMaterials",
-            "collection_client": "ADVANCE_MATERIALS_MAGAZINE_client",
-            "collection_name": "ADVANCE_MATERIALS_MAGAZINE",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "azonano": {
-            "module": azonano,
-            "class_name": "Azonano",
-            "collection_client": "AZONANO_client",
-            "collection_name": "AZONANO",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "betakit": {
-            "module": betakit,
-            "class_name": "BetaKit",
-            "collection_client": "BETA_KIT_client",
-            "collection_name": "BETA_KIT",
-            "priority": 1,
-            "type": "pagination"
-        },
+        # "advance_materials": {
+        #     "module": advance_materials,
+        #     "class_name": "AdvanceMaterials",
+        #     "collection_client": "ADVANCE_MATERIALS_MAGAZINE_client",
+        #     "collection_name": "ADVANCE_MATERIALS_MAGAZINE",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "azonano": {
+        #     "module": azonano,
+        #     "class_name": "Azonano",
+        #     "collection_client": "AZONANO_client",
+        #     "collection_name": "AZONANO",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "betakit": {
+        #     "module": betakit,
+        #     "class_name": "BetaKit",
+        #     "collection_client": "BETA_KIT_client",
+        #     "collection_name": "BETA_KIT",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
         "business_insider": {
             "module": business_insider,
             "class_name": "BusinessInsider",
@@ -113,102 +113,102 @@ class ScraperRegistry:
             "priority": 2,
             "type": "api"
         },
-        "canary": {
-            "module": canary,
-            "class_name": "Canary",
-            "collection_client": "CANARY_client",
-            "collection_name": "CANARY",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "cleanenergywire": {
-            "module": cleanenergywire,
-            "class_name": "CleanEnergyWire",
-            "collection_client": "CLEANENERGY_WIRE_client",
-            "collection_name": "CLEANENERGY_WIRE",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "cleantechnica": {
-            "module": cleantechnica,
-            "class_name": "CleanTechChina",
-            "collection_client": "CLEANTECHCHINA_client",
-            "collection_name": "CLEANTECHCHINA",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "cnet": {
-            "module": cnet,
-            "class_name": "Cnet",
-            "collection_client": "CNET_client",
-            "collection_name": "CNET",
-            "priority": 1,
-            "type": "api"
-        },
-        "complianceweek": {
-            "module": complianceweek,
-            "class_name": "ComplianceWeek",
-            "collection_client": "COMPLIANCEWEEK_client",
-            "collection_name": "COMPLIANCEWEEK",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "crunchbase": {
-            "module": crunchbase,
-            "class_name": "CrunchBase",
-            "collection_client": "CRUNCHBASE_client",
-            "collection_name": "CRUNCHBASE",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "fortune": {
-            "module": fortune,
-            "class_name": "Fortune",
-            "collection_client": "FORTUNE_client",
-            "collection_name": "FORTUNE",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "healthcareasiamagazine": {
-            "module": healthcareasiamagazine,
-            "class_name": "HealthCareAsiaMagazine",
-            "collection_client": "HEALTHCAREASIAMAGAZINE_client",
-            "collection_name": "HEALTHCAREASIAMAGAZINE",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "healthtechasia": {
-            "module": healthtechasia,
-            "class_name": "HealthTechAsia",
-            "collection_client": "HEALTHTECHASIA_client",
-            "collection_name": "HEALTHTECHASIA",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "healthtechmagazine": {
-            "module": healthtechmagazine,
-            "class_name": "HealthTechMagazine",
-            "collection_client": "HEALTHTECHMAGAZINE_client",
-            "collection_name": "HEALTHTECHMAGAZINE",
-            "priority": 1,
-            "type": "api"
-        },
-        "htn_co_uk": {
-            "module": htn_co_uk,
-            "class_name": "HTN_CO_UK",
-            "collection_client": "HTN_CO_UK_client",
-            "collection_name": "HTN_CO_UK",
-            "priority": 1,
-            "type": "pagination"
-        },
-        "intelligence360": {
-            "module": intelligence360,
-            "class_name": "Inteligence360",
-            "collection_client": "intelligence360_client",
-            "collection_name": "intelligence360",
-            "priority": 1,
-            "type": "pagination"
-        },
+        # "canary": {
+        #     "module": canary,
+        #     "class_name": "Canary",
+        #     "collection_client": "CANARY_client",
+        #     "collection_name": "CANARY",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "cleanenergywire": {
+        #     "module": cleanenergywire,
+        #     "class_name": "CleanEnergyWire",
+        #     "collection_client": "CLEANENERGY_WIRE_client",
+        #     "collection_name": "CLEANENERGY_WIRE",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "cleantechnica": {
+        #     "module": cleantechnica,
+        #     "class_name": "CleanTechChina",
+        #     "collection_client": "CLEANTECHCHINA_client",
+        #     "collection_name": "CLEANTECHCHINA",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "cnet": {
+        #     "module": cnet,
+        #     "class_name": "Cnet",
+        #     "collection_client": "CNET_client",
+        #     "collection_name": "CNET",
+        #     "priority": 1,
+        #     "type": "api"
+        # },
+        # "complianceweek": {
+        #     "module": complianceweek,
+        #     "class_name": "ComplianceWeek",
+        #     "collection_client": "COMPLIANCEWEEK_client",
+        #     "collection_name": "COMPLIANCEWEEK",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "crunchbase": {
+        #     "module": crunchbase,
+        #     "class_name": "CrunchBase",
+        #     "collection_client": "CRUNCHBASE_client",
+        #     "collection_name": "CRUNCHBASE",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "fortune": {
+        #     "module": fortune,
+        #     "class_name": "Fortune",
+        #     "collection_client": "FORTUNE_client",
+        #     "collection_name": "FORTUNE",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "healthcareasiamagazine": {
+        #     "module": healthcareasiamagazine,
+        #     "class_name": "HealthCareAsiaMagazine",
+        #     "collection_client": "HEALTHCAREASIAMAGAZINE_client",
+        #     "collection_name": "HEALTHCAREASIAMAGAZINE",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "healthtechasia": {
+        #     "module": healthtechasia,
+        #     "class_name": "HealthTechAsia",
+        #     "collection_client": "HEALTHTECHASIA_client",
+        #     "collection_name": "HEALTHTECHASIA",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "healthtechmagazine": {
+        #     "module": healthtechmagazine,
+        #     "class_name": "HealthTechMagazine",
+        #     "collection_client": "HEALTHTECHMAGAZINE_client",
+        #     "collection_name": "HEALTHTECHMAGAZINE",
+        #     "priority": 1,
+        #     "type": "api"
+        # },
+        # "htn_co_uk": {
+        #     "module": htn_co_uk,
+        #     "class_name": "HTN_CO_UK",
+        #     "collection_client": "HTN_CO_UK_client",
+        #     "collection_name": "HTN_CO_UK",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
+        # "intelligence360": {
+        #     "module": intelligence360,
+        #     "class_name": "Inteligence360",
+        #     "collection_client": "intelligence360_client",
+        #     "collection_name": "intelligence360",
+        #     "priority": 1,
+        #     "type": "pagination"
+        # },
         "mining": {
             "module": mining,
             "class_name": "Mining",

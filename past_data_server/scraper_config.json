@@ -1,5 +1,5 @@
 {
-    "mode": "incremental",
+    "mode": "full",
     "max_workers": 6,
     "max_pages_per_scraper": 5,
     "skip_existing": true,

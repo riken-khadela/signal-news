@@ -18,22 +18,22 @@
     "last_articles_count": 0
   },
   "advance_materials": {
-    "total_runs": 2,
-    "successful_runs": 2,
+    "total_runs": 10,
+    "successful_runs": 10,
     "failed_runs": 0,
-    "total_articles": 1,
-    "last_run": "2026-01-28T11:48:20.061011+05:30",
-    "last_success": "2026-01-28T11:48:20.061011+05:30",
-    "last_articles_count": 1
+    "total_articles": 224,
+    "last_run": "2026-01-29T14:19:30.570390+05:30",
+    "last_success": "2026-01-29T14:19:30.570390+05:30",
+    "last_articles_count": 223
   },
   "complianceweek": {
-    "total_runs": 2,
-    "successful_runs": 2,
+    "total_runs": 3,
+    "successful_runs": 3,
     "failed_runs": 0,
-    "total_articles": 0,
-    "last_run": "2026-01-28T11:48:17.359500+05:30",
-    "last_success": "2026-01-28T11:48:17.359500+05:30",
-    "last_articles_count": 0
+    "total_articles": 24,
+    "last_run": "2026-01-29T14:20:39.719755+05:30",
+    "last_success": "2026-01-29T14:20:39.719755+05:30",
+    "last_articles_count": 24
   },
   "crunchbase": {
     "total_runs": 2,
@@ -54,13 +54,13 @@
     "last_articles_count": 0
   },
   "betakit": {
-    "total_runs": 2,
-    "successful_runs": 2,
+    "total_runs": 4,
+    "successful_runs": 4,
     "failed_runs": 0,
-    "total_articles": 1,
-    "last_run": "2026-01-28T11:48:11.326368+05:30",
-    "last_success": "2026-01-28T11:48:11.326368+05:30",
-    "last_articles_count": 0
+    "total_articles": 16,
+    "last_run": "2026-01-29T14:08:39.754454+05:30",
+    "last_success": "2026-01-29T14:08:39.754454+05:30",
+    "last_articles_count": 15
   },
   "healthtechmagazine": {
     "total_runs": 2,
@@ -90,12 +90,12 @@
     "last_articles_count": 0
   },
   "intelligence360": {
-    "total_runs": 2,
-    "successful_runs": 2,
+    "total_runs": 3,
+    "successful_runs": 3,
     "failed_runs": 0,
     "total_articles": 0,
-    "last_run": "2026-01-28T11:48:25.437511+05:30",
-    "last_success": "2026-01-28T11:48:25.437511+05:30",
+    "last_run": "2026-01-29T14:29:51.766550+05:30",
+    "last_success": "2026-01-29T14:29:51.766550+05:30",
     "last_articles_count": 0
   },
   "mobihealthnews": {

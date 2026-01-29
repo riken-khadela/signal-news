@@ -87,9 +87,9 @@ class RigZone(BaseScraper):
                 if not tmp['url']:
                     continue
                 
-                # Check if exists (with skip tracking)
-                if self.check_article_exists(tmp['url']):
-                    continue
+                # # Check if exists (with skip tracking)
+                # if self.check_article_exists(tmp['url']):
+                #     continue
                 
                 # summary
                 summary_ele = blog.find('div', class_='description')
@@ -143,6 +143,9 @@ class RigZone(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")
@@ -164,7 +167,7 @@ class RigZone(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Multiple category URLs"""
         self.logger.info("🚀 Starting RigZone scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing category: {url}")
             self.consecutive_skips = 0
@@ -174,6 +177,10 @@ class RigZone(BaseScraper):
             self.get_grid_details(url)
             
             if self.grid_details:
+                if self.previous_grid == self.grid_details:
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
         
         # Log final statistics

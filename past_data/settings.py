@@ -17,7 +17,7 @@ logging.basicConfig(
 
 MONGO_URI = os.getenv(
     "MONGO_URI",
-    "mongodb://admin9:i38kjmx35@94.130.33.235:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
+    "mongodb://admin9:i38kjmx35@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
 )
 
 masterclient = MongoClient(MONGO_URI)

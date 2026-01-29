@@ -66,9 +66,9 @@ class Wired(BaseScraper):
                         href = link_ele.get('href')
                         tmp['url'] = f"https://www.wired.com{href}" if "https://www.wired.com" not in href else href
                     
-                    # Check if exists (with skip tracking)
-                    if 'url' in tmp and self.check_article_exists(tmp['url']):
-                        continue
+                    # # Check if exists (with skip tracking)
+                    # if 'url' in tmp and self.check_article_exists(tmp['url']):
+                    #     continue
                     
                     # title
                     if link_ele:
@@ -129,6 +129,9 @@ class Wired(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")

@@ -23,6 +23,8 @@ from typing import Dict, Optional
 import pytz
 from logger import CustomLogger
 
+ist = pytz.timezone("Asia/Kolkata")
+ist_time = datetime.now(tz=ist)
 
 class BaseScraper:
     """Base class for all news scrapers with common functionality"""
@@ -94,13 +96,15 @@ class BaseScraper:
                 return False
         
         # Check skip threshold
-        if self.config.get('enable_skip_logic', True):
-            skip_threshold = self.config.get('skip_threshold', 10)
-            if self.consecutive_skips >= skip_threshold:
-                self.logger.warning(
-                    f"⏹️  Reached skip threshold ({skip_threshold} consecutive skips), stopping scraper"
-                )
-                return False
+        print(self.config['mode'])
+        if self.config['mode'] == 'incremental':
+            if self.config.get('enable_skip_logic', True):
+                skip_threshold = self.config.get('skip_threshold', 10)
+                if self.consecutive_skips >= skip_threshold:
+                    self.logger.warning(
+                        f"⏹️  Reached skip threshold ({skip_threshold} consecutive skips), stopping scraper"
+                    )
+                    return False
         
         return True
     
@@ -116,10 +120,10 @@ class BaseScraper:
         """
         try:
             exists = self.db_client.find_one({"url": url}) is not None
-            
             if exists:
-                self.consecutive_skips += 1
-                self.skipped_urls += 1
+                if not self.config['mode'] == "full" :
+                    self.consecutive_skips += 1
+                    self.skipped_urls += 1
             else:
                 self.consecutive_skips = 0  # Reset on new article
             
@@ -157,6 +161,49 @@ class BaseScraper:
             self.logger.error(f"❌ Error checking article date: {e}")
             return False
     
+    def fix_data_doc(self,data_doc):
+        """
+        Ensures all required keys exist in the data_doc dictionary.
+        If any key is missing, it will be added with default values.
+        
+        Args:
+            data_doc (dict): The input dictionary to validate and fix
+            
+        Returns:
+            dict: A properly structured data_doc with all required keys
+        """
+        # Define the template structure
+        template = {
+            "author": "",
+            "image": "",
+            "url": "",
+            "title": "",
+            "time": "",
+            "description": {
+                "summary": "",
+                "details": ""
+            }
+        }
+        
+        # Create a fixed data_doc starting with the template
+        fixed_doc = {}
+        
+        # Check and add top-level keys
+        for key in ["author", "image", "url", "title", "time"]:
+            fixed_doc[key] = data_doc.get(key, template[key])
+        
+        # Handle the nested 'description' key
+        if "description" in data_doc and isinstance(data_doc["description"], dict):
+            fixed_doc["description"] = {
+                "summary": data_doc["description"].get("summary", ""),
+                "details": data_doc["description"].get("details", "")
+            }
+        else:
+            fixed_doc["description"] = template["description"].copy()
+        
+        fixed_doc['created_at'] = ist_time
+        return fixed_doc
+    
     def save_article(self, article_data: Dict) -> bool:
         """
         Save article to database with upsert
@@ -176,7 +223,7 @@ class BaseScraper:
             # Upsert article
             self.db_client.update_one(
                 {"url": article_data['url']},
-                {"$set": article_data},
+                {"$set": self.fix_data_doc(article_data)},
                 upsert=True
             )
             

@@ -430,15 +430,211 @@
           "error_message": ""
         }
       }
+    },
+    {
+      "run_id": "20260129_074914",
+      "start_time": "2026-01-29T07:49:14.196888",
+      "end_time": "2026-01-29T07:49:20.497503",
+      "duration_seconds": 6.300615,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 15,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:19:14.197429+05:30",
+          "end_time": "2026-01-29T13:19:20.495961+05:30",
+          "duration_seconds": 6.298532485961914,
+          "articles_scraped": 0,
+          "articles_skipped": 15,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_075317",
+      "start_time": "2026-01-29T07:53:17.676719",
+      "end_time": "2026-01-29T07:53:18.971928",
+      "duration_seconds": 1.295209,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:23:17.677416+05:30",
+          "end_time": "2026-01-29T13:23:18.970172+05:30",
+          "duration_seconds": 1.2927584648132324,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_080242",
+      "start_time": "2026-01-29T08:02:42.329112",
+      "end_time": "2026-01-29T08:02:50.560015",
+      "duration_seconds": 8.230903,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:32:42.329968+05:30",
+          "end_time": "2026-01-29T13:32:50.559003+05:30",
+          "duration_seconds": 8.229038953781128,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_080457",
+      "start_time": "2026-01-29T08:04:57.821945",
+      "end_time": "2026-01-29T08:05:08.963218",
+      "duration_seconds": 11.141273,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:34:57.822709+05:30",
+          "end_time": "2026-01-29T13:35:08.962000+05:30",
+          "duration_seconds": 11.139292240142822,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_080519",
+      "start_time": "2026-01-29T08:05:19.369524",
+      "end_time": "2026-01-29T08:05:34.466961",
+      "duration_seconds": 15.097437,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:35:19.370251+05:30",
+          "end_time": "2026-01-29T13:35:34.465762+05:30",
+          "duration_seconds": 15.09551453590393,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_080623",
+      "start_time": "2026-01-29T08:06:23.348762",
+      "end_time": "2026-01-29T08:06:24.502092",
+      "duration_seconds": 1.15333,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:36:23.349687+05:30",
+          "end_time": "2026-01-29T13:36:24.500713+05:30",
+          "duration_seconds": 1.151029348373413,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
+    },
+    {
+      "run_id": "20260129_081839",
+      "start_time": "2026-01-29T08:18:39.024325",
+      "end_time": "2026-01-29T08:19:13.158605",
+      "duration_seconds": 34.13428,
+      "mode": "full",
+      "total_scrapers": 1,
+      "successful_scrapers": 1,
+      "failed_scrapers": 0,
+      "total_articles_scraped": 0,
+      "total_articles_skipped": 0,
+      "total_errors": 0,
+      "scrapers": {
+        "advance_materials": {
+          "status": "success",
+          "start_time": "2026-01-29T13:48:39.025176+05:30",
+          "end_time": "2026-01-29T13:49:13.157833+05:30",
+          "duration_seconds": 34.13266038894653,
+          "articles_scraped": 0,
+          "articles_skipped": 0,
+          "errors": 0,
+          "collection": "ADVANCE_MATERIALS_MAGAZINE",
+          "before_count": 224,
+          "after_count": 224,
+          "error_message": ""
+        }
+      }
     }
   ],
   "summary": {
-    "total_runs": 1,
+    "total_runs": 8,
     "total_articles_scraped": 1636,
     "total_errors": 0,
-    "average_duration_seconds": 10387.92,
-    "latest_run_id": "20260128_114801",
-    "latest_run_time": "2026-01-28T11:48:01.289875",
-    "latest_run_articles": 1636
+    "average_duration_seconds": 1308.16,
+    "latest_run_id": "20260129_081839",
+    "latest_run_time": "2026-01-29T08:18:39.024325",
+    "latest_run_articles": 0
   }
 }

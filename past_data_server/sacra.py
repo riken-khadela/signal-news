@@ -83,9 +83,9 @@ class Sacra(BaseScraper):
                     if url_ele:
                         tmp['url'] = url_ele[0].get_attribute('href')
 
-                    # Check if exists (with skip tracking)
-                    if tmp['url'] and self.check_article_exists(tmp['url']):
-                        continue
+                    # # Check if exists (with skip tracking)
+                    # if tmp['url'] and self.check_article_exists(tmp['url']):
+                    #     continue
 
                     # Image
                     image_ele = company.find_elements(By.TAG_NAME, 'img')
@@ -169,6 +169,10 @@ class Sacra(BaseScraper):
 
     def get_article_details(self, slug, grid):
         """Fetch article details from URL"""
+        # Check if exists (with skip tracking)
+        if self.check_article_exists(grid['url']):
+            return False
+            
         for _ in range(5):
             random_sleep()
             res = requests.get(grid['url'], headers=get_headers(), proxies=get_proxy(), timeout=15, verify=False)
@@ -224,11 +228,15 @@ class Sacra(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Selenium-based company scraping"""
         self.logger.info("🚀 Starting Sacra scraper (Selenium-based)")
-        
+        self.previous_grid = []
         for url in URLS_LIST:
             self.logger.info(f"📂 Processing: {url}")
             self.get_grid_details(url)
             if self.grid_details:
+                if self.previous_grid == self.grid_details:
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
         
         # Log final statistics

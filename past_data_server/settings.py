@@ -10,13 +10,13 @@ import pytz
 
 MONGO_URI = os.getenv(
     "MONGO_URI",
-    "mongodb://admin9:i38kjmx35@94.130.33.235:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
+    "mongodb://admin9:i38kjmx35@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
 )
 logger = CustomLogger("Logs/Settings")
 masterclient = MongoClient(MONGO_URI)
-clientdb = masterclient.NEWSSCRAPERDATA
+clientdb = masterclient.NEW_NEWSSCRAPPERDATA
 news_details_client = clientdb.new_details
-intelligence360_client = clientdb.intelligence360
+intelligence360_client = clientdb.INTELLIGENCE360
 THE_WIRED_client = clientdb.THE_WIRED
 ZDNET_client = clientdb.ZDNET
 BETA_KIT_client = clientdb.BETA_KIT
@@ -41,7 +41,7 @@ HTN_CO_UK_client = clientdb.HTN_CO_UK
 HEALTHTECHASIA_client = clientdb.HEALTHTECHASIA
 WORLDOIL_client = clientdb.WORLDOIL
 ReNewableEnergyWorld_client = clientdb.RENEWABLEENERGYWORLD
-MobileHealthNews_client = clientdb.MobileHealthNews
+MobileHealthNews_client = clientdb.MOBILEHEALTHNEWS
 HEALTHTECHMAGAZINE_client = clientdb.HEALTHTECHMAGAZINE
 FORTUNE_client = clientdb.FORTUNE
 COMPLIANCEWEEK_client = clientdb.COMPLIANCEWEEK

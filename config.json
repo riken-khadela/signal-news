@@ -4,5 +4,5 @@
     "password": "Riken@123",
     "scrape_do_token": "http://api.scrape.do?token=50612111dbab405ca9c28aacbd4bf0e2dc7d7b4c269&url=https://httpbin.co/ip",
     "cookie_file": "COOCKIES.json",
-    "mongo_db_connection" : "mongodb://admin9:i38kjmx35@94.130.33.235:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
+    "mongo_db_connection": "mongodb://admin9:i38kjmx35@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&tls=true&tlsAllowInvalidCertificates=true&directConnection=true"
 }

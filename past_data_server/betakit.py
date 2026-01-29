@@ -71,9 +71,9 @@ class BetaKit(BaseScraper):
                 if link_ele:
                     tmp['url'] = f"{link_ele.get('href')}"
                 
-                # Check if exists (with skip tracking)
-                if 'url' in tmp and self.check_article_exists(tmp['url']):
-                    continue
+                # # Check if exists (with skip tracking)
+                # if 'url' in tmp and self.check_article_exists(tmp['url']):
+                #     continue
                 
                 # title
                 title_ele = children.find('h2')
@@ -117,6 +117,10 @@ class BetaKit(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
+
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")
@@ -136,11 +140,12 @@ class BetaKit(BaseScraper):
 
     def run(self):
         """Main execution logic"""
+        # self.config['mode'] = "full"
         self.logger.info("🚀 Starting BetaKit scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing: {url}")
-            self.page_index = -1
+            self.page_index = 0
             self.consecutive_skips = 0
             
             while self.should_continue_scraping():
@@ -151,6 +156,10 @@ class BetaKit(BaseScraper):
                 self.get_grid_details(url)
                 
                 if self.grid_details:
+                    if self.previous_grid == self.grid_details:
+                        self.logger.warning("No new articles found, stopping")
+                        break
+                    self.previous_grid = self.grid_details
                     self.check_db_grid()
                 else:
                     self.logger.warning("No articles found, stopping")

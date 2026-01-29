@@ -229,7 +229,7 @@ class BusinessInsider(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Uses API pagination"""
         self.logger.info("🚀 Starting Business Insider scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing: {url}")
             self.page_index = 0
@@ -240,7 +240,13 @@ class BusinessInsider(BaseScraper):
             self.grid_details = []
             self.get_grid_details(url)
             
-            # Articles are already processed inline
+            if self.grid_details:
+                if self.previous_grid == self.grid_details:
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
+                # Articles are already processed inline
+            
             break  # Only process once since API handles pagination
         
         # Log final statistics

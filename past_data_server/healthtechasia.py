@@ -102,9 +102,9 @@ class HealthTechAsia(BaseScraper):
                 if not tmp['url']:
                     continue
                 
-                # Check if exists (with skip tracking)
-                if self.check_article_exists(tmp['url']):
-                    continue
+                # # Check if exists (with skip tracking)
+                # if self.check_article_exists(tmp['url']):
+                #     continue
                 
                 # title
                 title_ele = children.find('h4')
@@ -162,6 +162,10 @@ class HealthTechAsia(BaseScraper):
         """Check DB before fetching details; skip if exists."""
         for grid in self.grid_details:
             try:
+                # Check if exists (with skip tracking)
+                if self.check_article_exists(grid['url']):
+                    continue
+                
                 done, response = get_request(f"{grid['url']}")
                 if not done:
                     self.logger.warning(f"Failed fetching: {grid['url']}")
@@ -183,7 +187,7 @@ class HealthTechAsia(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Multiple URLs"""
         self.logger.info("🚀 Starting HealthTech Asia scraper")
-        
+        self.previous_grid = []
         for url in URLS_list:
             self.logger.info(f"📂 Processing: {url}")
             self.page_index = 0
@@ -197,6 +201,10 @@ class HealthTechAsia(BaseScraper):
                 self.get_grid_details(url)
                 
                 if self.grid_details:
+                    if self.previous_grid == self.grid_details:
+                        self.logger.warning("No new articles found, stopping")
+                        break
+                    self.previous_grid = self.grid_details
                     self.check_db_grid()
                 else:
                     self.logger.warning("No articles found, stopping")
