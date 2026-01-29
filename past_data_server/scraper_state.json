@@ -1,0 +1,290 @@
+{
+  "cleanenergywire": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:06.309307+05:30",
+    "last_success": "2026-01-28T11:48:06.309307+05:30",
+    "last_articles_count": 0
+  },
+  "azonano": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:11.324370+05:30",
+    "last_success": "2026-01-28T11:48:11.324370+05:30",
+    "last_articles_count": 0
+  },
+  "advance_materials": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 1,
+    "last_run": "2026-01-28T11:48:20.061011+05:30",
+    "last_success": "2026-01-28T11:48:20.061011+05:30",
+    "last_articles_count": 1
+  },
+  "complianceweek": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:17.359500+05:30",
+    "last_success": "2026-01-28T11:48:17.359500+05:30",
+    "last_articles_count": 0
+  },
+  "crunchbase": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:19.082530+05:30",
+    "last_success": "2026-01-28T11:48:19.082530+05:30",
+    "last_articles_count": 0
+  },
+  "canary": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:11.522951+05:30",
+    "last_success": "2026-01-28T11:48:11.522951+05:30",
+    "last_articles_count": 0
+  },
+  "betakit": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 1,
+    "last_run": "2026-01-28T11:48:11.326368+05:30",
+    "last_success": "2026-01-28T11:48:11.326368+05:30",
+    "last_articles_count": 0
+  },
+  "healthtechmagazine": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:23.019917+05:30",
+    "last_success": "2026-01-28T11:48:23.019917+05:30",
+    "last_articles_count": 0
+  },
+  "fortune": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:24.209914+05:30",
+    "last_success": "2026-01-28T11:48:24.209914+05:30",
+    "last_articles_count": 0
+  },
+  "cnet": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:03.019409+05:30",
+    "last_success": "2026-01-28T11:49:03.019409+05:30",
+    "last_articles_count": 0
+  },
+  "intelligence360": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:25.437511+05:30",
+    "last_success": "2026-01-28T11:48:25.437511+05:30",
+    "last_articles_count": 0
+  },
+  "mobihealthnews": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:32.488270+05:30",
+    "last_success": "2026-01-28T11:48:32.488270+05:30",
+    "last_articles_count": 0
+  },
+  "healthtechasia": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 2,
+    "last_run": "2026-01-28T11:48:32.579999+05:30",
+    "last_success": "2026-01-28T11:48:32.579999+05:30",
+    "last_articles_count": 0
+  },
+  "neno_werk": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:31.406280+05:30",
+    "last_success": "2026-01-28T11:48:31.406280+05:30",
+    "last_articles_count": 0
+  },
+  "healthcareasiamagazine": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 8,
+    "last_run": "2026-01-28T11:48:19.128751+05:30",
+    "last_success": "2026-01-28T11:48:19.128751+05:30",
+    "last_articles_count": 0
+  },
+  "cleantechnica": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 11,
+    "last_run": "2026-01-28T11:48:09.964645+05:30",
+    "last_success": "2026-01-28T11:48:09.964645+05:30",
+    "last_articles_count": 0
+  },
+  "phocuswire": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 1,
+    "last_run": "2026-01-28T11:48:39.725916+05:30",
+    "last_success": "2026-01-28T11:48:39.725916+05:30",
+    "last_articles_count": 0
+  },
+  "quantam_insider": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:38.079299+05:30",
+    "last_success": "2026-01-28T11:48:38.079299+05:30",
+    "last_articles_count": 0
+  },
+  "renewableenergyworld": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:48:48.886614+05:30",
+    "last_success": "2026-01-28T11:48:48.886614+05:30",
+    "last_articles_count": 0
+  },
+  "tech_eu": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 2,
+    "last_run": "2026-01-28T11:49:12.868765+05:30",
+    "last_success": "2026-01-28T11:49:12.868765+05:30",
+    "last_articles_count": 0
+  },
+  "tech_funding": {
+    "total_runs": 2,
+    "successful_runs": 0,
+    "failed_runs": 2,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:10.815476+05:30",
+    "last_error": "module 'tech_funding' has no attribute 'TechFunding'\nTraceback (most recent call last):\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\z_main.py\", line 507, in run_scraper\n    scraper_class = getattr(module, class_name)\nAttributeError: module 'tech_funding' has no attribute 'TechFunding'\n",
+    "last_error_time": "2026-01-28T11:49:10.815476+05:30"
+  },
+  "htn_co_uk": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:50.004972+05:30",
+    "last_success": "2026-01-28T11:49:50.004972+05:30",
+    "last_articles_count": 0
+  },
+  "worldoil": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:20.415330+05:30",
+    "last_success": "2026-01-28T11:49:20.415330+05:30",
+    "last_articles_count": 0
+  },
+  "next_web": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:45.954314+05:30",
+    "last_success": "2026-01-28T11:49:45.954314+05:30",
+    "last_articles_count": 0
+  },
+  "business_insider": {
+    "total_runs": 2,
+    "successful_runs": 2,
+    "failed_runs": 0,
+    "total_articles": 4,
+    "last_run": "2026-01-28T11:49:52.551343+05:30",
+    "last_success": "2026-01-28T11:49:52.551343+05:30",
+    "last_articles_count": 3
+  },
+  "tech_crunch": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 1,
+    "last_run": "2026-01-28T11:49:10.479905+05:30",
+    "last_success": "2026-01-28T11:49:10.479905+05:30",
+    "last_articles_count": 1
+  },
+  "tech_in_aisa": {
+    "total_runs": 1,
+    "successful_runs": 0,
+    "failed_runs": 1,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:49:55.887210+05:30",
+    "last_error": "[WinError 183] Cannot create a file when that file already exists: 'C:\\\\Users\\\\Amisha\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected\\\\chromedriver-win32\\\\chromedriver.exe' -> 'C:\\\\Users\\\\Amisha\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected_chromedriver.exe'\nTraceback (most recent call last):\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\z_main.py\", line 531, in run_scraper\n    scraper_instance.run()\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\tech_in_aisa.py\", line 240, in run\n    self.get_grid_details(url)\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\tech_in_aisa.py\", line 76, in get_grid_details\n    driver = uc.Chrome(options=options, version_main=143)\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\.venv\\lib\\site-packages\\undetected_chromedriver\\__init__.py\", line 258, in __init__\n    self.patcher.auto()\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\.venv\\lib\\site-packages\\undetected_chromedriver\\patcher.py\", line 178, in auto\n    self.unzip_package(self.fetch_package())\n  File \"C:\\Workspace\\Shushant\\news_scrapper\\past_data_server\\.venv\\lib\\site-packages\\undetected_chromedriver\\patcher.py\", line 310, in unzip_package\n    os.rename(os.path.join(self.zip_path, exe_path), self.executable_path)\nFileExistsError: [WinError 183] Cannot create a file when that file already exists: 'C:\\\\Users\\\\Amisha\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected\\\\chromedriver-win32\\\\chromedriver.exe' -> 'C:\\\\Users\\\\Amisha\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected_chromedriver.exe'\n",
+    "last_error_time": "2026-01-28T11:49:55.887210+05:30"
+  },
+  "mining": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 37,
+    "last_run": "2026-01-28T11:51:49.430115+05:30",
+    "last_success": "2026-01-28T11:51:49.430115+05:30",
+    "last_articles_count": 37
+  },
+  "wired": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 36,
+    "last_run": "2026-01-28T11:53:35.197043+05:30",
+    "last_success": "2026-01-28T11:53:35.197043+05:30",
+    "last_articles_count": 36
+  },
+  "rigzone": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T11:57:38.475004+05:30",
+    "last_success": "2026-01-28T11:57:38.475004+05:30",
+    "last_articles_count": 0
+  },
+  "sacra": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 0,
+    "last_run": "2026-01-28T12:15:33.490817+05:30",
+    "last_success": "2026-01-28T12:15:33.490817+05:30",
+    "last_articles_count": 0
+  },
+  "zdnet": {
+    "total_runs": 1,
+    "successful_runs": 1,
+    "failed_runs": 0,
+    "total_articles": 1558,
+    "last_run": "2026-01-28T14:41:09.200447+05:30",
+    "last_success": "2026-01-28T14:41:09.200447+05:30",
+    "last_articles_count": 1558
+  }
+}

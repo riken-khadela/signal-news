@@ -1,0 +1,26 @@
+{
+    "mode": "incremental",
+    "max_workers": 6,
+    "max_pages_per_scraper": 5,
+    "skip_existing": true,
+    "skip_threshold": 10,
+    "enable_skip_logic": true,
+    "retry_failed": true,
+    "timeout_per_scraper": 3600,
+    "enabled_scrapers": "all",
+    "disabled_scrapers": [],
+    "auto_merge": false,
+    "merge_date_filter": "2025-01-01",
+    "comments": {
+        "mode": "Set to 'full' for complete scraping or 'incremental' for only new articles",
+        "max_workers": "Number of concurrent scrapers to run (1-10 recommended)",
+        "max_pages_per_scraper": "Maximum pages to scrape per source in incremental mode",
+        "skip_existing": "Skip articles already in database (true recommended)",
+        "skip_threshold": "Stop scraping after N consecutive duplicate articles found",
+        "enable_skip_logic": "Enable early termination when skip threshold is reached",
+        "auto_merge": "Automatically run merged_news.py after all scrapers complete",
+        "merge_date_filter": "Only merge articles from this date onwards (YYYY-MM-DD)",
+        "enabled_scrapers": "Set to 'all' or provide array of scraper names to enable",
+        "disabled_scrapers": "Array of scraper names to disable (overrides enabled_scrapers)"
+    }
+}

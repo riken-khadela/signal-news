@@ -1,0 +1,237 @@
+from email.mime import image
+import logging
+import time
+from datetime import datetime, timedelta, timezone
+import json
+from bs4 import BeautifulSoup
+from requests import RequestException
+from settings import get_request, ZDNET_client as news_details_client, parse_datetime_safe
+from base_scraper import BaseScraper
+import pytz
+
+ist = pytz.timezone("Asia/Kolkata")
+
+# UNIQUE: ZDnet scrapes 40+ different topic categories
+URLS_list = [
+    'https://www.zdnet.com/topic/ar-vr/',
+    'https://www.zdnet.com/topic/cloud/',
+    'https://www.zdnet.com/topic/digital-transformation/',
+    'https://www.zdnet.com/topic/energy/',
+    'https://www.zdnet.com/topic/robotics/',
+    'https://www.zdnet.com/topic/sustainability/',
+    'https://www.zdnet.com/topic/transportation/',
+    'https://www.zdnet.com/topic/work-life/',
+    'https://www.zdnet.com/topic/accelerate-your-tech-game/',
+    'https://www.zdnet.com/topic/how-the-new-space-race-will-drive-innovation/',
+    'https://www.zdnet.com/topic/how-the-metaverse-will-change-the-future-of-work-and-society/',
+    'https://www.zdnet.com/topic/managing-the-multicloud/',
+    'https://www.zdnet.com/topic/the-future-of-the-internet/',
+    'https://www.zdnet.com/topic/the-tech-trends-to-watch-in-2023/',
+    'https://www.zdnet.com/topic/the-new-rules-of-work/',
+    'https://www.zdnet.com/topic/amazon/',
+    'https://www.zdnet.com/topic/apple/',
+    'https://www.zdnet.com/topic/developer/',
+    'https://www.zdnet.com/topic/e-commerce/',
+    'https://www.zdnet.com/topic/edge-computing/',
+    'https://www.zdnet.com/topic/enterprise-software/',
+    'https://www.zdnet.com/topic/executive/',
+    'https://www.zdnet.com/topic/google/',
+    'https://www.zdnet.com/topic/microsoft/',
+    'https://www.zdnet.com/topic/professional-development/',
+    'https://www.zdnet.com/topic/social-media/',
+    'https://www.zdnet.com/topic/smb/',
+    'https://www.zdnet.com/topic/windows/',
+    'https://www.zdnet.com/topic/how-ai-is-transforming-organizations-everywhere/',
+    'https://www.zdnet.com/topic/the-intersection-of-generative-ai-and-engineering/',
+    'https://www.zdnet.com/topic/software-development-emerging-trends-and-changing-roles/',
+    'https://www.zdnet.com/topic/security/',
+    'https://www.zdnet.com/topic/cyber-threats/',
+    'https://www.zdnet.com/topic/password-manager/',
+    'https://www.zdnet.com/topic/ransomware/',
+    'https://www.zdnet.com/topic/vpn/',
+    'https://www.zdnet.com/topic/cybersecurity-lets-get-tactical/',
+]
+
+class Zdnet(BaseScraper):
+    def __init__(self):
+        super().__init__(
+            db_client=news_details_client,
+            log_folder="log/zdnet"
+        )
+        self.grid_details = []
+
+    def get_grid_details(self, url):
+        """Scrape the grid (listing) page."""
+        try:
+            done, response = get_request(url + str(self.page_index))
+            if not done:
+                self.logger.error(f"Request failed: {url}")
+                return []
+
+            self.grid_details = self.scrape_grid_data(response.text)
+            self.logger.info(f"Collected {len(self.grid_details)} grid items.")
+            return self.grid_details
+
+        except RequestException as e:
+            self.logger.error(f"Request error while fetching grid: {e}")
+            return []
+        except Exception as e:
+            self.logger.error(f"Unexpected error in get_grid_details: {e}")
+            return []
+
+    def scrape_grid_data(self, html_content):
+        """Extract article data from ZDnet search results"""
+        data = BeautifulSoup(html_content, 'html.parser')
+        extracted_data = []
+        
+        # UNIQUE: ZDnet uses c-featureDefaultListing structure
+        main_children = data.find('div', {'class': 'c-featureDefaultListing'})
+        if not main_children:
+            return extracted_data
+        
+        for children in main_children.find_all('div', {'class': 'u-grid-columns'}):
+            try:
+                tmp = {}
+                
+                # link
+                link_ele = children.find('a', {'class': 'c-listingDefault_itemLink'})
+                if link_ele:
+                    tmp['url'] = f"https://www.zdnet.com{link_ele.get('href')}"
+                    
+                    # UNIQUE: Skip video articles
+                    if "https://www.zdnet.com/video/" in tmp['url']:
+                        self.logger.warning('Skipping video article')
+                        continue
+                
+                # Check if exists (with skip tracking)
+                if 'url' in tmp and self.check_article_exists(tmp['url']):
+                    continue
+                
+                # author
+                author_ele = children.find('a', {'class': 'c-listingDefault_author'})
+                if author_ele:
+                    tmp['author'] = author_ele.get_text(strip=True)
+                
+                # image
+                image_ele = children.find('img')
+                if image_ele:
+                    tmp['image'] = image_ele.get('src')
+                
+                # title
+                title_ele = children.find('h3')
+                if title_ele:
+                    tmp['title'] = title_ele.get_text(strip=True)
+                
+                extracted_data.append(tmp)
+            except Exception as e:
+                self.logger.error(f"Error extracting data from article: {e}")
+        
+        return extracted_data
+
+    def separate_blog_details(self, response):
+        """Parse the full blog page for details."""
+        details = {
+            "description": {
+                "summary": "",
+                "details": ""
+            },
+            "time": '',
+            "image": ""
+        }
+        try:
+            data = BeautifulSoup(response.text, "html.parser")
+            
+            # UNIQUE: Check for video player (skip video articles)
+            video_player_ele = data.find('div', {'class': 'c-videoPlayer'})
+            if video_player_ele:
+                return "Video Article"
+            
+            # description summary
+            summary_ele = data.find('div', {'class': 'c-contentHeader_description'})
+            if summary_ele:
+                details['description']['summary'] = summary_ele.get_text(strip=True)
+            
+            # time
+            time_ele = data.find('time', {'class': 'c-globalAuthor_time'})
+            if time_ele:
+                details['time'] = parse_datetime_safe(time_ele.get_text(strip=True))
+            
+            # description details
+            details_ele = data.find('div', {'class': 'c-articleContent'})
+            if details_ele:
+                details['description']['details'] = ' \n'.join([
+                    i.get_text(strip=True) for i in details_ele.find_all('p')
+                ])
+                
+                # image from article content
+                image_ele = details_ele.find('img')
+                if image_ele:
+                    details['image'] = image_ele.get('src')
+                    
+        except Exception as e:
+            self.logger.error(f"Error parsing blog details: {e}")
+
+        return details
+
+    def check_db_grid(self):
+        """Check DB before fetching details; skip if exists."""
+        for grid in self.grid_details:
+            try:
+                done, response = get_request(f"{grid['url']}")
+                if not done:
+                    self.logger.warning(f"Failed fetching: {grid['url']}")
+                    continue
+
+                details = self.separate_blog_details(response)
+                
+                # UNIQUE: Skip video articles
+                if details == "Video Article":
+                    self.logger.info(f"Skipping video article: {grid['url']}")
+                    continue
+                
+                merged = {**grid, **details}
+                
+                # Use image from details if grid doesn't have one
+                if not grid.get('image'):
+                    merged['image'] = details.get('image', '')
+                
+                # Use save_article from BaseScraper
+                if self.save_article(merged):
+                    self.logger.info(f"✅ Saved: {merged['url']}")
+
+                time.sleep(1)
+            except Exception as e:
+                self.logger.error(f"Error in check_db_grid for {grid['url']}: {e}")
+
+    def run(self):
+        """Main execution logic - UNIQUE: loops through 40+ category URLs"""
+        self.logger.info("🚀 Starting ZDnet scraper")
+        
+        # UNIQUE: ZDnet scrapes 40+ categories
+        for url in URLS_list:
+            self.logger.info(f"📂 Processing category: {url}")
+            self.page_index = 0  # Reset for each category
+            self.consecutive_skips = 0  # Reset skip counter
+            
+            while self.should_continue_scraping():
+                self.page_index += 1
+                self.logger.info(f"📄 Processing page {self.page_index}")
+                
+                self.grid_details = []
+                self.get_grid_details(url)
+                
+                if self.grid_details:
+                    self.check_db_grid()
+                else:
+                    self.logger.warning("No articles found, moving to next category")
+                    break
+        
+        # Log final statistics
+        self.log_stats()
+        self.logger.info("✅ ZDnet scraper completed")
+
+def main():
+    Zdnet().run()
+    
+if __name__ == "__main__":
+    main()
