@@ -59,6 +59,7 @@ class BaseScraper:
         self.skip_stage = 0  # 0=+1, 1=+5, 2=+10, 3=+20
         self.skipped_pages = []  # Pages that were skipped during fast indexing
         self.last_empty_page = None  # Last page where grid_details was empty
+        self.articles_saved_this_page = 0  # Track articles saved in current page
         
         # Timezone
         self.ist = pytz.timezone("Asia/Kolkata")
@@ -126,22 +127,27 @@ class BaseScraper:
         """
         Adaptive page indexing for efficient scraping.
         
-        In 'full' mode with empty grid_details:
-        - Progressively increases skip intervals: 1 → 5 → 10 → 20
-        - Tracks skipped pages for potential backtracking
-        
-        When grid_details appear after being empty:
-        - Backtracks to scrape previously skipped pages
-        - Ensures no pages are permanently missed
+        In 'full' mode:
+        - If articles were saved: Normal +1 increment (productive page)
+        - If NO articles saved (all existing or empty): Progressive skip (1→5→10→20)
+        - Tracks skipped pages for backtracking when new articles are found
         
         Args:
             page_index: Current page index
             grid_details: List of articles found on current page
+            
         Returns:
             int: Next page index to scrape
         """
         if self.config['mode'] == 'full':
-            if grid_details == []:
+            # Check if this page was productive (saved new articles)
+            was_productive = self.articles_saved_this_page > 0
+            
+            # Reset counter for next page
+            self.articles_saved_this_page = 0
+            
+            if not was_productive:
+                # No new articles saved - apply adaptive skipping
                 self.last_empty_page = page_index
                 
                 skip_increments = [1, 5, 10, 20]
@@ -152,15 +158,17 @@ class BaseScraper:
                 if current_increment > 1:
                     skipped = list(range(page_index + 1, next_page))
                     self.skipped_pages.extend(skipped)
-                    self.logger.info(f"🚀 Fast-forward: Stage {self.skip_stage} (+{current_increment}) - Skipping pages {skipped}")
+                    self.logger.info(f"🚀 Fast-forward: Stage {self.skip_stage} (+{current_increment}) - No new articles saved, skipping pages {skipped}")
                 
                 if self.skip_stage < 3:
                     self.skip_stage += 1
                 
                 return next_page
             else:
+                # Articles were saved! This is a productive page
                 if self.last_empty_page is not None and self.skipped_pages:
-                    self.logger.warning(f"⚠️ Content found after empty pages! Backtracking to scrape {len(self.skipped_pages)} skipped pages")
+                    # We were skipping pages but now found new content
+                    self.logger.warning(f"⚠️ New articles saved after unproductive pages! Backtracking to scrape {len(self.skipped_pages)} skipped pages")
                     
                     next_page = self.skipped_pages.pop(0)
                     
@@ -170,14 +178,14 @@ class BaseScraper:
                     self.logger.info(f"↩️ Backtracking to page {next_page}")
                     return next_page
                 else:
+                    # Normal progression - reset skip stage
                     self.skip_stage = 0
                     self.last_empty_page = None
                     return page_index + 1
         else:
-            if grid_details == []:
-                return page_index + 1
-            else:
-                return page_index + 1
+            # Incremental mode - simple increment
+            self.articles_saved_this_page = 0
+            return page_index + 1
         
         return page_index + 1
 
@@ -301,6 +309,7 @@ class BaseScraper:
             )
             
             self.total_articles_scraped += 1
+            self.articles_saved_this_page += 1  # Track for adaptive indexing
             return True
             
         except Exception as e:
