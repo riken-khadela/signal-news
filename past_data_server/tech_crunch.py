@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 import json
 from bs4 import BeautifulSoup
 from requests import RequestException
-from settings import get_request, news_details_client
+from settings import get_request, news_details_client, parse_datetime_safe
 from base_scraper import BaseScraper
 from logger import CustomLogger
 import pytz
@@ -178,8 +178,11 @@ class TechCrunch(BaseScraper):
                 self.check_db_grid()
             else:
                 self.logger.warning(f"No articles found on page {self.page_index}")
+                
+            # Get next page index AFTER processing current page
+            self.page_index = self.get_new_page_index(self.page_index, self.grid_details)
             
-            self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
+            self.page_index += 1
         
         # Log final statistics
         self.log_stats()

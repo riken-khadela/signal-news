@@ -171,7 +171,7 @@ class RigZone(BaseScraper):
         for url in URLS_list:
             self.logger.info(f"📂 Processing category: {url}")
             self.consecutive_skips = 0
-            self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
+            self.page_index += 1
             
             self.grid_details = []
             self.get_grid_details(url)
@@ -186,6 +186,9 @@ class RigZone(BaseScraper):
                 self.check_db_grid()
             else:
                 self.logger.warning(f"No articles found on page {self.page_index}")
+                
+            # Get next page index AFTER processing current page
+            self.page_index = self.get_new_page_index(self.page_index, self.grid_details)
 
         
         # Log final statistics

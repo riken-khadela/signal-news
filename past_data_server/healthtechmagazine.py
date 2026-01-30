@@ -229,8 +229,10 @@ class HealthTechMagazine(BaseScraper):
         """Main execution logic - UNIQUE: AJAX-based scraping"""
         self.logger.info("🚀 Starting HealthTech Magazine scraper")
         self.previous_grid = []
-        
+        self.page_index = 0
         while self.should_continue_scraping():
+            self.page_index += 1
+
             self.logger.info(f"📄 Processing page {self.page_index}")
             
             self.grid_details = []
@@ -245,8 +247,10 @@ class HealthTechMagazine(BaseScraper):
                 self.check_db_grid()
             else:
                 self.logger.warning(f"No articles found on page {self.page_index}")
+                
+            # Get next page index AFTER processing current page
+            self.page_index = self.get_new_page_index(self.page_index, self.grid_details)
             
-            self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
         
         # Log final statistics
         self.log_stats()

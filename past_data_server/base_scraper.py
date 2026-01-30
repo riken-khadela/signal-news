@@ -26,7 +26,8 @@ class BaseScraper:
         self.skip_stage = 0  
         self.skipped_pages = []  
         self.last_empty_page = None  
-        self.articles_saved_this_page = 0   
+        self.articles_saved_this_page = 0
+        self.is_in_backtrack_mode = False  # Explicit backtracking flag   
         self.ist = pytz.timezone("Asia/Kolkata")
         self.utc = pytz.UTC
     
@@ -68,63 +69,77 @@ class BaseScraper:
             return False
 
     def get_new_page_index(self, page_index, grid_details: list) -> int:
-        if self.config['mode'] == 'full':
-            was_productive = self.articles_saved_this_page > 0
-            saved_count = self.articles_saved_this_page
-            
-            self.articles_saved_this_page = 0
-            
-            is_backtracking = len(self.skipped_pages) > 0
-            
-            if not was_productive:
-                if not is_backtracking:
-                    self.last_empty_page = page_index
-                    
-                    skip_increments = [1, 5, 10, 20]
-                    current_increment = skip_increments[min(self.skip_stage, 3)]
-                    
-                    next_page = page_index + current_increment
-                    
-                    if current_increment > 1:
-                        skipped = list(range(page_index + 1, next_page))
-                        self.skipped_pages = skipped  
-                        self.logger.info(f"🚀 Fast-forward: Stage {self.skip_stage} (+{current_increment}) - No new articles saved, skipping pages {skipped}")
-                    else:
-                        self.skipped_pages = []
-                    
-                    if self.skip_stage < 3:
-                        self.skip_stage += 1
-                    
-                    return next_page
-                else:
-                    if self.skipped_pages:
-                        next_page = self.skipped_pages.pop(0)
-                        self.logger.info(f"↩️ Continuing backtrack to page {next_page}")
-                        return next_page
-                    else:
-                        self.skip_stage = 0
-                        self.last_empty_page = None
-                        return page_index + 1
-            else:
-                if is_backtracking:
-                    if self.skipped_pages:
-                        next_page = self.skipped_pages.pop(0)
-                        self.logger.info(f"↩️ Continuing backtrack to page {next_page} (saved {saved_count} articles)")
-                        return next_page
-                    else:
-                        self.logger.info(f"✅ Backtracking complete!")
-                        self.skip_stage = 0
-                        self.last_empty_page = None
-                        return page_index + 1
-                else:
-                    self.skip_stage = 0
-                    self.last_empty_page = None
-                    return page_index + 1
-        else:
+        """
+        Adaptive page indexing with smart backtracking.
+        
+        Forward mode: Skip 1→5→10→20 when no articles saved
+        Backtrack mode: Process skipped pages sequentially when articles found
+        """
+        if self.config['mode'] != 'full':
+            # Incremental mode - simple +1
             self.articles_saved_this_page = 0
             return page_index + 1
         
-        return page_index + 1
+        # Check productivity
+        was_productive = self.articles_saved_this_page > 0
+        saved_count = self.articles_saved_this_page
+        self.articles_saved_this_page = 0  # Reset for next page
+        
+        # === BACKTRACKING MODE ===
+        if self.is_in_backtrack_mode:
+            if self.skipped_pages:
+                # Continue processing skipped pages
+                next_page = self.skipped_pages.pop(0)
+                if was_productive:
+                    self.logger.info(f"↩️ Backtracking to page {next_page} (saved {saved_count} articles on page {page_index})")
+                else:
+                    self.logger.info(f"↩️ Backtracking to page {next_page}")
+                return next_page
+            else:
+                # Finished backtracking
+                self.logger.info(f"✅ Backtracking complete! Resuming from page {page_index + 1}")
+                self.is_in_backtrack_mode = False
+                self.skip_stage = 0
+                self.last_empty_page = None
+                return page_index + 1
+        
+        # === FORWARD MODE ===
+        if was_productive:
+            # Articles saved - check if we need to start backtracking
+            if self.skipped_pages:
+                # We have skipped pages and just found articles - START BACKTRACKING
+                self.is_in_backtrack_mode = True
+                next_page = self.skipped_pages.pop(0)
+                self.logger.warning(f"⚠️ Found {saved_count} articles! Starting backtrack through {len(self.skipped_pages) + 1} skipped pages")
+                self.logger.info(f"↩️ Backtracking to page {next_page}")
+                return next_page
+            else:
+                # Normal progression - no skipped pages
+                self.skip_stage = 0
+                self.last_empty_page = None
+                return page_index + 1
+        else:
+            # No articles saved - apply adaptive skipping
+            self.last_empty_page = page_index
+            
+            skip_increments = [1, 5, 10, 20]
+            current_increment = skip_increments[min(self.skip_stage, 3)]
+            
+            next_page = page_index + current_increment
+            
+            if current_increment > 1:
+                # Create NEW skip list (replaces old one)
+                skipped = list(range(page_index + 1, next_page))
+                self.skipped_pages = skipped
+                self.logger.info(f"🚀 Fast-forward: Stage {self.skip_stage} (+{current_increment}) - Skipping to page {next_page}")
+            else:
+                # Stage 0 (+1) - no skipping
+                self.skipped_pages = []
+            
+            if self.skip_stage < 3:
+                self.skip_stage += 1
+            
+            return next_page
 
     def check_article_exists(self, url: str) -> bool:
         

@@ -148,7 +148,7 @@ class Inteligence360(BaseScraper):
         self.previous_grid = []
         
         while self.should_continue_scraping():
-            self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
+            self.page_index += 1
             self.logger.info(f"📄 Processing page {self.page_index}")
             
             self.grid_details = []
@@ -163,6 +163,9 @@ class Inteligence360(BaseScraper):
                 self.check_db_grid()
             else:
                 self.logger.warning(f"No articles found on page {self.page_index}")
+                
+            # Get next page index AFTER processing current page
+            self.page_index = self.get_new_page_index(self.page_index, self.grid_details)
 
         
         # Log final statistics
