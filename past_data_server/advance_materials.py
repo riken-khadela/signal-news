@@ -170,7 +170,6 @@ class AdvanceMaterials(BaseScraper):
                 self.logger.error(f"Error in check_db_grid for {grid['url']}: {e}")
 
     def run(self):
-        """Main execution logic"""
         self.logger.info("🚀 Starting Advanced Materials scraper")
         self.previous_grid = []
         for url in URLS_list:
@@ -178,23 +177,22 @@ class AdvanceMaterials(BaseScraper):
             self.page_index = 0
             self.consecutive_skips = 0
             while self.should_continue_scraping():
-                self.page_index += 1
+                self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
                 self.logger.info(f"📄 Processing page {self.page_index}")
                 
                 self.grid_details = []
                 self.get_grid_details(url)
                 
+                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                    self.logger.warning("Breaking loop - reached end or duplicate pages")
+                    break
+                
                 if self.grid_details:
-                    if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
-                        self.logger.warning("No new articles found, stopping")
-                        break
                     self.previous_grid = self.grid_details
                     self.check_db_grid()
                 else:
-                    self.logger.warning("No articles found, stopping")
-                    break
+                    self.logger.warning(f"No articles found on page {self.page_index}")
         
-        # Log final statistics
         self.log_stats()
         self.logger.info("✅ Advanced Materials scraper completed")
 

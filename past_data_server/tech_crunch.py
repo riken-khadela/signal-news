@@ -179,7 +179,7 @@ class TechCrunch(BaseScraper):
                 self.logger.warning("No articles found, stopping")
                 break
             
-            self.page_index += 1
+            self.page_index = self.get_new_page_index(self.page_index, self.grid_details if hasattr(self, 'grid_details') else [])
         
         # Log final statistics
         self.log_stats()

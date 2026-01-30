@@ -55,6 +55,11 @@ class BaseScraper:
         self.consecutive_skips = 0
         self.total_articles_scraped = 0
         
+        # Adaptive page indexing state (for full mode)
+        self.skip_stage = 0  # 0=+1, 1=+5, 2=+10, 3=+20
+        self.skipped_pages = []  # Pages that were skipped during fast indexing
+        self.last_empty_page = None  # Last page where grid_details was empty
+        
         # Timezone
         self.ist = pytz.timezone("Asia/Kolkata")
         self.utc = pytz.UTC
@@ -116,6 +121,65 @@ class BaseScraper:
             if previous_grid == grid_details:
                 return True
             return False
+
+    def get_new_page_index(self, page_index, grid_details: list) -> int:
+        """
+        Adaptive page indexing for efficient scraping.
+        
+        In 'full' mode with empty grid_details:
+        - Progressively increases skip intervals: 1 → 5 → 10 → 20
+        - Tracks skipped pages for potential backtracking
+        
+        When grid_details appear after being empty:
+        - Backtracks to scrape previously skipped pages
+        - Ensures no pages are permanently missed
+        
+        Args:
+            page_index: Current page index
+            grid_details: List of articles found on current page
+        Returns:
+            int: Next page index to scrape
+        """
+        if self.config['mode'] == 'full':
+            if grid_details == []:
+                self.last_empty_page = page_index
+                
+                skip_increments = [1, 5, 10, 20]
+                current_increment = skip_increments[min(self.skip_stage, 3)]
+                
+                next_page = page_index + current_increment
+                
+                if current_increment > 1:
+                    skipped = list(range(page_index + 1, next_page))
+                    self.skipped_pages.extend(skipped)
+                    self.logger.info(f"🚀 Fast-forward: Stage {self.skip_stage} (+{current_increment}) - Skipping pages {skipped}")
+                
+                if self.skip_stage < 3:
+                    self.skip_stage += 1
+                
+                return next_page
+            else:
+                if self.last_empty_page is not None and self.skipped_pages:
+                    self.logger.warning(f"⚠️ Content found after empty pages! Backtracking to scrape {len(self.skipped_pages)} skipped pages")
+                    
+                    next_page = self.skipped_pages.pop(0)
+                    
+                    self.skip_stage = 0
+                    self.last_empty_page = None
+                    
+                    self.logger.info(f"↩️ Backtracking to page {next_page}")
+                    return next_page
+                else:
+                    self.skip_stage = 0
+                    self.last_empty_page = None
+                    return page_index + 1
+        else:
+            if grid_details == []:
+                return page_index + 1
+            else:
+                return page_index + 1
+        
+        return page_index + 1
 
     def check_article_exists(self, url: str) -> bool:
         """
