@@ -239,12 +239,16 @@ class TechInAsia(BaseScraper):
         for url in URLS_LIST:
             self.logger.info(f"📂 Processing category: {url}")
             self.get_grid_details(url)
+            
+            if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                self.logger.warning("Breaking loop - reached end or duplicate pages")
+                break
+            
             if self.grid_details:
-                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
-                    self.logger.warning("No new articles found, stopping")
-                    break
                 self.previous_grid = self.grid_details
                 self.check_db_grid()
+            else:
+                self.logger.warning(f"No articles found on page {self.page_index}")
         
         # Log final statistics
         self.log_stats()

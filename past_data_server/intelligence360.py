@@ -155,14 +155,14 @@ class Inteligence360(BaseScraper):
             self.get_grid_details()
             
             if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
-                    self.logger.warning("Breaking loop - reached end or duplicate pages")
-                    break
+                self.logger.warning("Breaking loop - reached end or duplicate pages")
+                break
                 
-                if self.grid_details:
-                    self.previous_grid = self.grid_details
-                    self.check_db_grid()
-                else:
-                    self.logger.warning(f"No articles found on page {self.page_index}")
+            if self.grid_details:
+                self.previous_grid = self.grid_details
+                self.check_db_grid()
+            else:
+                self.logger.warning(f"No articles found on page {self.page_index}")
 
         
         # Log final statistics
