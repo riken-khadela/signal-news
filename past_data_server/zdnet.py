@@ -215,6 +215,7 @@ class Zdnet(BaseScraper):
             self.logger.info(f"📂 Processing category: {url}")
             self.page_index = 0  # Reset for each category
             self.consecutive_skips = 0  # Reset skip counter
+            self.previous_grid = []
             
             while self.should_continue_scraping():
                 self.page_index += 1
@@ -224,6 +225,10 @@ class Zdnet(BaseScraper):
                 self.get_grid_details(url)
                 
                 if self.grid_details:
+                    if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                        self.logger.warning("No new articles found, stopping")
+                        break
+                    self.previous_grid = self.grid_details
                     self.check_db_grid()
                 else:
                     self.logger.warning("No articles found, moving to next category")

@@ -161,6 +161,7 @@ class TechCrunch(BaseScraper):
     def run(self):
         """Main execution logic"""
         self.logger.info("🚀 Starting TechCrunch scraper")
+        self.previous_grid = []
         
         while self.should_continue_scraping():
             self.logger.info(f"📄 Processing page {self.page_index}")
@@ -169,6 +170,10 @@ class TechCrunch(BaseScraper):
             self.get_grid_details()
             
             if self.grid_details:
+                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
             else:
                 self.logger.warning("No articles found, stopping")

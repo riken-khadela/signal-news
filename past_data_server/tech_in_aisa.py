@@ -234,11 +234,16 @@ class TechInAsia(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: Selenium + API integration"""
         self.logger.info("🚀 Starting Tech In Asia scraper (Selenium + API)")
+        self.previous_grid = []
         
         for url in URLS_LIST:
             self.logger.info(f"📂 Processing category: {url}")
             self.get_grid_details(url)
             if self.grid_details:
+                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
         
         # Log final statistics

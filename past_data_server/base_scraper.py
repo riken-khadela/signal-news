@@ -108,6 +108,15 @@ class BaseScraper:
         
         return True
     
+    def should_break_loop(self, page_index : int = 0, previous_grid : list = [], grid_details : list = []):
+        if self.config['mode'] == 'full':
+            if page_index >= 5000:
+                return True
+        else :
+            if previous_grid == grid_details:
+                return True
+            return False
+
     def check_article_exists(self, url: str) -> bool:
         """
         Check if article already exists in database

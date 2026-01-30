@@ -183,9 +183,9 @@ class HTN_CO_UK(BaseScraper):
             self.get_grid_details(url)
             
             if self.grid_details:
-                if self.previous_grid == self.grid_details:
-                    self.logger.warning("No new articles found, stopping")
-                    break
+                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                        self.logger.warning("No new articles found, stopping")
+                        break
                 self.previous_grid = self.grid_details
                 self.check_db_grid()
         

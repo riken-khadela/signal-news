@@ -202,6 +202,7 @@ class TechFundingNews(BaseScraper):
     def run(self):
         """Main execution logic - UNIQUE: AJAX-based category scraping"""
         self.logger.info("🚀 Starting Tech Funding News scraper")
+        self.previous_grid = []
         
         for cat_name, cfg in CATEGORIES.items():
             page = 1
@@ -214,8 +215,12 @@ class TechFundingNews(BaseScraper):
 
                 stop = self.scrape_grid_html(html, cat_name)
                 if stop:
-                    self.logger.info(f"Reached 1-year-old articles for {cat_name}, stopping")
-                    break
+                    if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                        self.logger.warning("No new articles found, stopping")
+                        break
+                    else :
+                        self.logger.info(f"Reached 1-year-old articles for {cat_name}, stopping")
+                        break
 
                 page += 1
                 time.sleep(1)

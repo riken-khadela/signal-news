@@ -145,6 +145,7 @@ class Inteligence360(BaseScraper):
         self.logger.info("🚀 Starting Intelligence360 scraper")
         
         self.page_index = 0
+        self.previous_grid = []
         
         while self.should_continue_scraping():
             self.page_index += 1
@@ -154,6 +155,10 @@ class Inteligence360(BaseScraper):
             self.get_grid_details()
             
             if self.grid_details:
+                if self.should_break_loop(self.page_index, self.previous_grid, self.grid_details):
+                    self.logger.warning("No new articles found, stopping")
+                    break
+                self.previous_grid = self.grid_details
                 self.check_db_grid()
             else:
                 self.logger.warning("No articles found, stopping")
